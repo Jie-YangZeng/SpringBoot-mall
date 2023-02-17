@@ -1,5 +1,6 @@
 package com.jiyzen.springbootmall.model;
 
+import com.jiyzen.springbootmall.constant.ProductCategory;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,7 +10,7 @@ public class Product {
 
     private Integer product_id;
     private String product_name;
-    private String category;
+    private ProductCategory category;
     private String image_url;
     private Integer price;
     private Integer stock;
