@@ -6,4 +6,6 @@ import com.jiyzen.springbootmall.model.Product;
 public interface ProductService {
     Product getByProductId(Integer productId);
     Integer createProduct(ProductRequest productRequest);
+
+    void updateProduct(Integer productId, ProductRequest pr);
 }
