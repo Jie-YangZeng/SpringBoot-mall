@@ -23,8 +23,23 @@ public class ProductDaoImpl implements ProductDao {
     private NamedParameterJdbcTemplate npjt;
 
     @Override
+    public List<Product> getProductList() {
+        String sql = "SELECT product_id, product_name, category, " +
+                "image_url, price, stock, description, " +
+                "created_date, last_modified_date " +
+                "FROM product";
+
+        Map<String, Object> map = new HashMap<>();
+
+        List<Product> productList = npjt.query(sql, map, new ProductRowMapper());
+
+        return productList;
+    }
+
+    @Override
     public Product getByProductId(Integer productId) {
-        String sql = "SELECT product_id, product_name, category, image_url, price, stock, description, " +
+        String sql = "SELECT product_id, product_name, category, " +
+                "image_url, price, stock, description, " +
                 "created_date, last_modified_date " +
                 "FROM product WHERE product_id = :productId";
 

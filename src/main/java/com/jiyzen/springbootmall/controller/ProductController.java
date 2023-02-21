@@ -9,14 +9,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class ProductController {
 
     @Autowired
     private ProductService productService;
 
+    @GetMapping("/products")
+    public ResponseEntity<List<Product>> getProductList() {
+        List<Product> productList = productService.getProductList();
+
+        return ResponseEntity.status(HttpStatus.OK).body(productList);
+    }
+
     @GetMapping("/products/{productId}")
-    public ResponseEntity<Product> getByProduct(@PathVariable Integer productId){
+    public ResponseEntity<Product> getByProduct(@PathVariable Integer productId) {
         Product product = productService.getByProductId(productId);
 
         if(product != null) {
@@ -27,7 +36,7 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductRequest pr){
+    public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductRequest pr) {
         Integer productId = productService.createProduct(pr);
         Product product = productService.getByProductId(productId);
 
