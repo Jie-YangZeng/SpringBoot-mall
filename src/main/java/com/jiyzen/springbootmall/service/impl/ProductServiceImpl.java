@@ -1,6 +1,7 @@
 package com.jiyzen.springbootmall.service.impl;
 
 import com.jiyzen.springbootmall.dao.ProductDao;
+import com.jiyzen.springbootmall.dto.ProductQueryParams;
 import com.jiyzen.springbootmall.dto.ProductRequest;
 import com.jiyzen.springbootmall.model.Product;
 import com.jiyzen.springbootmall.service.ProductService;
@@ -16,8 +17,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public List<Product> getProductList() {
-        return productDao.getProductList();
+    public List<Product> getProductList(ProductQueryParams productQueryParams) {
+        return productDao.getProductList(productQueryParams);
     }
 
     @Override

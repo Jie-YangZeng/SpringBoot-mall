@@ -1,5 +1,6 @@
 package com.jiyzen.springbootmall.dao;
 
+import com.jiyzen.springbootmall.dto.ProductQueryParams;
 import com.jiyzen.springbootmall.dto.ProductRequest;
 import com.jiyzen.springbootmall.model.Product;
 
@@ -14,5 +15,5 @@ public interface ProductDao {
 
     void deleteProduct(Integer productId);
 
-    List<Product> getProductList();
+    List<Product> getProductList(ProductQueryParams productQueryParams);
 }

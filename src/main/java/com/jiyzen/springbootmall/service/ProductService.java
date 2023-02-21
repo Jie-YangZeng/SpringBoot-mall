@@ -1,5 +1,6 @@
 package com.jiyzen.springbootmall.service;
 
+import com.jiyzen.springbootmall.dto.ProductQueryParams;
 import com.jiyzen.springbootmall.dto.ProductRequest;
 import com.jiyzen.springbootmall.model.Product;
 
@@ -11,5 +12,5 @@ public interface ProductService {
     void updateProduct(Integer productId, ProductRequest pr);
     void deleteProduct(Integer productId);
 
-    List<Product> getProductList();
+    List<Product> getProductList(ProductQueryParams productQueryParams);
 }
