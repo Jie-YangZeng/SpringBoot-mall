@@ -10,7 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.nio.charset.StandardCharsets;
 
 @Component
 public class UserServiceImpl implements UserService {
@@ -27,30 +30,37 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer register(UserRegisterRequest urr) {
-        //check
+        // check
         if (userDao.getUserByEmail(urr.getEmail()) != null) {
             log.warn("This email:{} is already registered", urr.getEmail());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
-        //create
+        // MD5 (hash)
+        String hashPassword = DigestUtils.md5DigestAsHex(urr.getPassword().getBytes());
+        urr.setPassword(hashPassword);
+
+        // create
         return userDao.createUser(urr);
     }
 
     @Override
     public User login(UserLoginRequest ulr) {
         User user = userDao.getUserByEmail(ulr.getEmail());
-        //check
+        // check
         if (user == null) {
             log.warn("This email:{} has not been registered", ulr.getEmail());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
-        //correct password
-        if (user.getPassword().equals(ulr.getPassword())) {
+        // MD5 (hash)
+        String hashPassword = DigestUtils.md5DigestAsHex(ulr.getPassword().getBytes());
+
+        // correct password
+        if (user.getPassword().equals(hashPassword)) {
             return user;
         }
-        //wrong password
+        // wrong password
         log.warn("This account:{} password is wrong");
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
