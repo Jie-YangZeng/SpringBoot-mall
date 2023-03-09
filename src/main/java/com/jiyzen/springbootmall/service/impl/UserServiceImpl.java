@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.nio.charset.StandardCharsets;
-
 @Component
 public class UserServiceImpl implements UserService {
 
@@ -30,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer register(UserRegisterRequest urr) {
-        // check
+        // confirm existence
         if (userDao.getUserByEmail(urr.getEmail()) != null) {
             log.warn("This email:{} is already registered", urr.getEmail());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
@@ -47,7 +45,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(UserLoginRequest ulr) {
         User user = userDao.getUserByEmail(ulr.getEmail());
-        // check
+        // confirm existence
         if (user == null) {
             log.warn("This email:{} has not been registered", ulr.getEmail());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
